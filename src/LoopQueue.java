@@ -56,8 +56,8 @@ public class LoopQueue<E> implements Queue<E> {
     }
 
     @Override
-    public E getFront(){
-        if(isEmpty()){
+    public E getFront() {
+        if (isEmpty()) {
             throw new IllegalArgumentException("Queue is empty.");
         }
         return data[front];
@@ -72,5 +72,35 @@ public class LoopQueue<E> implements Queue<E> {
         data = newData;
         front = 0;
         tail = size;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder res = new StringBuilder();
+        res.append(String.format("Queue:size = %d, capacity = %d\n", size, getCapacity()));
+        res.append("front [");
+        for (int i = front; i != tail; i = (i + 1) % data.length) {
+            res.append(data[i]);
+            if ((+1) % data.length != tail) {
+                res.append(", ");
+            }
+        }
+        res.append("] tail");
+        return res.toString();
+    }
+
+
+    public static void main(String[] args) {
+        LoopQueue<Integer> queue = new LoopQueue<>();
+        for (int i = 0; i < 10; i++) {
+            queue.enqueue(i);
+            System.out.println(queue);
+
+            if (i % 3 == 2) {
+                queue.dequeue();
+                System.out.println(queue);
+            }
+        }
+        System.out.println(queue);
     }
 }
