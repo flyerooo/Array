@@ -47,10 +47,18 @@ public class Array<E> {
         size++;
     }
 
-    E get(int index) {
+    public E get(int index) {
         if (index < 0 || index >= size)
             throw new IllegalArgumentException("Get failed. Index is illegal");
         return data[index];
+    }
+
+    public E getLast(){
+        return get(size-1);
+    }
+
+    public E getFirst(){
+        return get(0);
     }
 
     void set(int index, E e) {
@@ -89,7 +97,7 @@ public class Array<E> {
         }
         size--;
         data[size] = null;  // loitering objects != member leak
-        if (size == data.length / 2) {
+        if (size == data.length / 4 && data.length / 2 != 0) {  // removeLast 时防止resize过于着急(出现复杂度震荡)，当size==capacity/4时，才将capacity减半
             resize(data.length / 2);
         }
         return ret;
