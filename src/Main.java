@@ -14,6 +14,7 @@ public class Main {
             System.out.println(score);
         scores[0] = 999;
         System.out.println(scores[0]);
+
     }
 
     }
