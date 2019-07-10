@@ -1,21 +1,31 @@
+import java.util.Random;
+
 public class Main {
+    private static double testQueue(Queue<Integer> q, int opCount){
+        long startTime = System.nanoTime();
 
+        Random random = new Random();
+        for (int i=0;i<opCount;i++){
+            q.enqueue(random.nextInt(Integer.MAX_VALUE));
+        }
+        for (int i =0;i<opCount;i++){
+            q.dequeue();
+        }
+
+        long endTime = System.nanoTime();
+        return (endTime-startTime)/1000000000.0;
+
+    }
     public static void main(String[] args) {
-	// write your code here
-        int[] arr = new int[10];
-        for(int i = 0; i < arr.length; i++)
-            arr[i] = i;
+        int opCount = 100000;
 
-        int[] scores = new int[]{100, 99, 66};
-        for(int i=0; i < scores.length; i++)
-            System.out.println(scores[i]);
+        ArrayQueue<Integer> arrayQueue = new ArrayQueue<>();
+        double time1=testQueue(arrayQueue, opCount);
+        System.out.println("ArrayQueue, time: " + time1 + " s");
 
-        for(int score: scores)
-            System.out.println(score);
-        scores[0] = 999;
-        System.out.println(scores[0]);
-
+        LoopQueue<Integer> loopQueue = new LoopQueue<>();
+        double time2 = testQueue(loopQueue, opCount);
+        System.out.println("LoopQueue, time: " + time2 + " s");
     }
-
-    }
+}
 
